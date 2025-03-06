@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A feature-rich to-do list app with calendar, categories, dark mode, and more.">
+    <meta name="author" content="Your Name">
+    <title>Advanced To-Do List</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            padding: 20px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        .dark-mode { background: linear-gradient(135deg, #232526, #414345); color: white; }
+        .blue-theme { background: linear-gradient(135deg, #2193b0, #6dd5ed); color: #1A237E; }
+        .green-theme { background: linear-gradient(135deg, #56ab2f, #a8e063); color: #222; }
+        .neon-theme { background: linear-gradient(135deg, #12c2e9, #c471ed, #f64f59); color: #fff; }
+        .midnight-theme { background: linear-gradient(135deg, #2c3e50, #4ca1af); color: #fff; }
+        .cyberpunk-theme { background: linear-gradient(135deg, #ff00ff, #00ffff); color: #000; }
+        .sunset-theme { background: linear-gradient(135deg, #ff7e5f, #feb47b); color: #222; }
+        .forest-theme { background: linear-gradient(135deg, #5a3f37, #2c7744); color: #fff; }
+        .ocean-theme { background: linear-gradient(135deg, #1e3c72, #2a5298); color: #fff; }
+        .pastel-theme { background: linear-gradient(135deg, #a8e6cf, #dcedc1, #ffd3b6, #ffaaa5); color: #333; }
+        .solarized-theme { background: linear-gradient(135deg, #002b36, #073642); color: #fff; }
+
+        .dark-mode .container, .dark-mode .task-list, .dark-mode .task-item { background: #333; color: white; }
+        .blue-theme .container, .blue-theme .task-list, .blue-theme .task-item { background: #1b6ca8; color: white; }
+        .green-theme .container, .green-theme .task-list, .green-theme .task-item { background: #88c070; color: black; }
+        .neon-theme .container, .neon-theme .task-list, .neon-theme .task-item { background: #6a0572; color: white; }
+        .midnight-theme .container, .midnight-theme .task-list, .midnight-theme .task-item { background: #34495e; color: white; }
+        .cyberpunk-theme .container, .cyberpunk-theme .task-list, .cyberpunk-theme .task-item { background: #111; color: cyan; }
+        .sunset-theme .container, .sunset-theme .task-list, .sunset-theme .task-item { background: #ff9966; color: black; }
+        .forest-theme .container, .forest-theme .task-list, .forest-theme .task-item { background: #3a5a40; color: white; }
+        .ocean-theme .container, .ocean-theme .task-list, .ocean-theme .task-item { background: #294a7d; color: white; }
+        .pastel-theme .container, .pastel-theme .task-list, .pastel-theme .task-item { background: #f8d7da; color: black; }
+        .solarized-theme .container, .solarized-theme .task-list, .solarized-theme .task-item { background: #002b36; color: white; }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        #listsContainer {
+            transition: background 0.3s ease, color 0.3s ease;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .dark-mode #listsContainer { background: #2a2a2a; color: white; }
+        .blue-theme #listsContainer { background: #155a8a; color: white; }
+        .green-theme #listsContainer { background: #4a8c4a; color: black; }
+        .neon-theme #listsContainer { background: #530d5c; color: white; }
+        .midnight-theme #listsContainer { background: #283747; color: white; }
+        .cyberpunk-theme #listsContainer { background: #222; color: cyan; }
+        .sunset-theme #listsContainer { background: #e6735c; color: black; }
+        .forest-theme #listsContainer { background: #2e4b33; color: white; }
+        .ocean-theme #listsContainer { background: #1c3a63; color: white; }
+        .pastel-theme #listsContainer { background: #f5c6cb; color: black; }
+        .solarized-theme #listsContainer { background: #01303d; color: white; }
+
+        .dark-mode .container {
+            background: #333;
+            color: white;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .dashboard {
+            margin-bottom: 20px;
+        }
+        .search-bar {
+            margin-bottom: 15px;
+        }
+        input, select {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+        .task-item {
+            background: #f9f9f9;
+            padding: 12px;
+            margin: 6px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 6px;
+            font-size: 18px;
+            transition: 0.3s;
+            flex-wrap: wrap;
+        }
+        .task-actions {
+            display: flex;
+            gap: 5px;
+        }
+        .list-heading {
+    text-align: left;
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    padding-left: 10px; /* Adjust for alignment */
+}
+
+        .delete, .edit {
+            border: none;
+            padding: 6px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .delete { background: red; color: white; }
+        .edit { background: #ffc107; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="theme-toggle" id="themeToggle">🎨</button>
+        <h1>Welcome to To-Do List</h1>
+        <div class="dashboard">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search To-Do Lists">
+            </div>
+            <button id="createList">Create New To-Do List</button>
+        </div>
+        <h2 class="list-heading">Your To-Do Lists</h2>
+
+        <div id="listsContainer"></div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    const listsContainer = document.getElementById("listsContainer");
+    const createListButton = document.getElementById("createList");
+    const searchInput = document.getElementById("searchInput");
+
+    function loadLists() {
+        const savedLists = JSON.parse(localStorage.getItem("todoLists")) || [];
+        savedLists.forEach(listName => addListToDOM(listName));
+    }
+
+    function saveLists() {
+        const lists = Array.from(document.querySelectorAll(".task-item span"))
+                          .map(span => span.textContent);
+        localStorage.setItem("todoLists", JSON.stringify(lists));
+    }
+
+    function addListToDOM(listName) {
+        const div = document.createElement("div");
+        div.classList.add("task-item");
+        div.innerHTML = `<span>${listName}</span> <button class='delete'>X</button>`;
+        listsContainer.appendChild(div);
+
+        div.querySelector(".delete").addEventListener("click", function() {
+            div.remove();
+            saveLists();
+        });
+    }
+
+    createListButton.addEventListener("click", function() {
+        const listName = prompt("Enter To-Do List Name:");
+        if (listName) {
+            addListToDOM(listName);
+            saveLists();
+        }
+    });
+
+    searchInput.addEventListener("input", function() {
+        const searchValue = this.value.toLowerCase();
+        document.querySelectorAll(".task-item").forEach(item => {
+            item.style.display = item.textContent.toLowerCase().includes(searchValue) ? "flex" : "none";
+        });
+    });
+
+    loadLists();
+});
+
+        const themes = ["dark-mode", "blue-theme", "green-theme", "neon-theme", "midnight-theme", "cyberpunk-theme", "sunset-theme", "forest-theme", "ocean-theme", "pastel-theme", "solarized-theme"];
+        let currentThemeIndex = localStorage.getItem("selectedThemeIndex") ? parseInt(localStorage.getItem("selectedThemeIndex")) : -1;
+        
+        function applyTheme(index) {
+            document.body.classList.remove(...themes);
+            document.body.classList.add(themes[index]);
+            localStorage.setItem("selectedThemeIndex", index);
+        }
+        
+        if (currentThemeIndex >= 0) {
+            applyTheme(currentThemeIndex);
+        }
+        
+        document.getElementById("themeToggle").addEventListener("click", function() {
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+            applyTheme(currentThemeIndex);
+        });
+    </script>
+</body>
+</html>
