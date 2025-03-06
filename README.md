@@ -13,9 +13,6 @@ A **feature-rich** and **customizable** to-do list web application that helps yo
 ✅ **Multiple Themes** – Choose from **Dark Mode, Cyberpunk, Ocean, Pastel, and more**.  
 ✅ **User-Friendly Interface** – A clean and responsive design for a smooth experience.  
 
-## 📸 Screenshots
-![To-Do List Screenshot](screenshot.png)  
-
 ## 🛠️ Installation & Usage
 
 1. **Clone the repository:**
