@@ -21,6 +21,6 @@ A **feature-rich** and **customizable** to-do list web application that helps yo
 1. **Clone the repository:**
    ```sh
    git clone https://github.com/indala/todo-list-app.git
-#🤝 Contributing
+
 Feel free to fork this repository, make enhancements, and submit a pull request!
 
